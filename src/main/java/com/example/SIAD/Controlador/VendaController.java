@@ -7,6 +7,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.SIAD.Dominio.Venda;
+import com.example.SIAD.Dominio.DTO.VendaDTO;
 import com.example.SIAD.Servico.ProdutoService;
 import com.example.SIAD.Servico.VendaService;
 
@@ -32,9 +33,17 @@ public class VendaController {
         }
     }
 
+    /*
+     * @GetMapping
+     * public List<Venda> listarVendas() {
+     * return vendaService.listarVenda();
+     * }
+     */
+
     @GetMapping
-    public List<Venda> listarVendas() {
-        return vendaService.listarVenda();
+    public ResponseEntity<List<VendaDTO>> listarVendasFormatadas() {
+        List<VendaDTO> vendas = vendaService.listarVendasFormatado();
+        return ResponseEntity.ok(vendas);
     }
 
     @PutMapping("/{id}")

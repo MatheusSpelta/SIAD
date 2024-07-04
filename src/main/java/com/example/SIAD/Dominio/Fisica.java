@@ -1,5 +1,9 @@
 package com.example.SIAD.Dominio;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +18,7 @@ public class Fisica extends Pessoa {
     @Column(name = "cpf")
     private String cpf;
 
-    @ManyToOne
-    @JoinColumn(name = "id_endereco")
-    private Endereco endereco;
+    @OneToMany(mappedBy = "fisica", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Endereco> enderecos;
 }

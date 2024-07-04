@@ -3,6 +3,7 @@ package com.example.SIAD.Controlador;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.SIAD.Dominio.Juridica;
@@ -16,8 +17,13 @@ public class JuridicaController {
     private JuridicaService juridicaService;
 
     @PostMapping
-    public Juridica cadastrarJuridica(@RequestBody Juridica juridica) {
-        return juridicaService.cadastrarJuridica(juridica);
+    public ResponseEntity<Object> cadastrarJuridica(@RequestBody Juridica juridica) {
+        try {
+            juridicaService.cadastrarJuridica(juridica);
+            return ResponseEntity.ok("Pessoa juridica cadastrada com sucesso!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Erro ao cadastrar Pessoa Juridica: " + e.getMessage());
+        }
     }
 
     @GetMapping
@@ -26,8 +32,13 @@ public class JuridicaController {
     }
 
     @PutMapping("/{id}")
-    public Juridica atualizarJuridica(@PathVariable Long id, @RequestBody Juridica juridica) {
-        return juridicaService.editarJuridica(id, juridica);
+    public ResponseEntity<Object> atualizarJuridica(@PathVariable Long id, @RequestBody Juridica juridica) {
+        try {
+            juridicaService.editarJuridica(id, juridica);
+            return ResponseEntity.ok("Pessoa Juridica editada com sucesso");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("Erro ao editar pessoa Juridica: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

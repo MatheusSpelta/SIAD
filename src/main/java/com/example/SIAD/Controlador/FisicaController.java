@@ -3,21 +3,10 @@ package com.example.SIAD.Controlador;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.SIAD.Dominio.Endereco;
 import com.example.SIAD.Dominio.Fisica;
-import com.example.SIAD.Repositorio.EnderecoJPA;
-import com.example.SIAD.Repositorio.FisicaJPA;
 import com.example.SIAD.Servico.FisicaService;
 
 @RestController
@@ -25,25 +14,16 @@ import com.example.SIAD.Servico.FisicaService;
 public class FisicaController {
 
     @Autowired
-    public FisicaController(FisicaJPA fisicaJPA, EnderecoJPA enderecoJPA) {
-        this.fisicaJPA = fisicaJPA;
-        this.enderecoJPA = enderecoJPA;
-    }
-
-    @Autowired
     private FisicaService fisicaService;
 
-    private final FisicaJPA fisicaJPA;
-    private final EnderecoJPA enderecoJPA;
-
     @PostMapping
-    public ResponseEntity<Fisica> cadastrarFisica(@RequestBody Fisica fisica) {
-        Endereco endereco = fisica.getEndereco();
-        if (endereco != null) {
-            endereco = enderecoJPA.save(endereco);
-            fisica.setEndereco(endereco);
+    public ResponseEntity<Object> cadastrarFisica(@RequestBody Fisica fisica) {
+        try {
+            fisicaService.cadastrarFisica(fisica);
+            ResponseEntity.ok("Pessoa fisica cadastrada");
+        } catch (Exception e) {
+            ResponseEntity.badRequest().body("Erro ao cadastrar pessoa fisica" + e.getMessage());
         }
-        fisicaJPA.save(fisica);
         return new ResponseEntity<>(fisica, HttpStatus.CREATED);
     }
 

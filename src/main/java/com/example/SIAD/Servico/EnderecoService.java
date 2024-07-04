@@ -26,12 +26,16 @@ public class EnderecoService {
         return enderecoJPA.findById(id);
     }
 
-    public Endereco editarEndereco(Long id, Endereco endereco){
+    public Endereco editarEndereco(Long id, Endereco endereco) {
         endereco.setId(id);
         return enderecoJPA.save(endereco);
     }
 
-    public void excluirEndereco(Long id){
+    public void excluirEndereco(Long id) {
         enderecoJPA.deleteById(id);
+    }
+
+    public Endereco definirPorID(Long id) {
+        return enderecoJPA.getReferenceById(id);
     }
 }

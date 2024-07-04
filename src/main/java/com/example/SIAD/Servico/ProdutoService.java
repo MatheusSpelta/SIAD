@@ -22,8 +22,12 @@ public class ProdutoService {
         return produtoJPA.findAll();
     }
 
-    public Optional<Produto> encontrarPessoaPorId(Long id) {
+    public Optional<Produto> encontrarProdutoPorID(Long id) {
         return produtoJPA.findById(id);
+    }
+
+    public Produto definirProdutoPorID(Long id) {
+        return produtoJPA.getReferenceById(id);
     }
 
     public Produto editarProduto(Long id, Produto produto) {

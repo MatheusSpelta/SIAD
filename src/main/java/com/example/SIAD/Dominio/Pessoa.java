@@ -11,7 +11,6 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
-
 public abstract class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +22,5 @@ public abstract class Pessoa {
 
     @Column(name = "dataNascimento")
     private Date dataNascimento;
+
 }

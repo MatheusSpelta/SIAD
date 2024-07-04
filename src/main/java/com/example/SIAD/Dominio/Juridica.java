@@ -12,5 +12,4 @@ import lombok.*;
 public class Juridica extends Pessoa {
     @Column(name = "cnpj")
     private String cnpj;
-
 }

@@ -1,7 +1,6 @@
 package com.example.SIAD.Dominio;
 
-import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,6 +37,8 @@ public class Endereco {
     @Column(name = "numero")
     private String numero;
 
-    @OneToMany(mappedBy = "endereco")
-    private List<Fisica> pessoas;
+    @ManyToOne
+    @JoinColumn(name = "fisica_id")
+    @JsonBackReference
+    private Fisica fisica;
 }
